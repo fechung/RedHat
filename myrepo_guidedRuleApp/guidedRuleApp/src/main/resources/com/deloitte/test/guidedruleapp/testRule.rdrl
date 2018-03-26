@@ -1,0 +1,14 @@
+package com.deloitte.test.guidedruleapp;
+
+import java.lang.Number;
+
+rule "testRule"
+	dialect "mvel"
+	when
+		client : Client( policyList : policyList != null )
+		(Policy( claimList : claimList != null ) from policyList)
+		(Claim( rejected == true ) from claimList)
+	then
+		client.setBuy( true );
+		client.setMsg( "你成功了" );
+end
